@@ -70,10 +70,10 @@ binary_sensor:
   - platform: gpio
     name:                                    # Fill Value
     id: S1
-    pin:                                     
+    pin:
       number:                                # Fill Value
-      inverted: True                         
-      mode: 
+      inverted: True
+      mode:
         input: True
         pullup: True
     filters:

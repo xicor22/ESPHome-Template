@@ -15,7 +15,7 @@ esphome:
   project:
     name: esphome.web
     version: '1.0'
-  
+
 esp32:
   board: nodemcu-32s
   framework:
@@ -72,10 +72,10 @@ binary_sensor:
   - platform: gpio
     name:                                    # Fill Value
     id: S1
-    pin:                                     
+    pin:
       number:                                # Fill Value
-      inverted: True                         
-      mode: 
+      inverted: True
+      mode:
         input: True
         pullup: True
     filters:
