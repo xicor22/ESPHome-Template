@@ -56,4 +56,36 @@ wifi:
     password: ${wifipass}
 
 captive_portal:
-    
+
+
+switch:
+  - platform: gpio
+    pin:                                    # Fill Value
+    name:                                   # Fill Value
+    id: R1
+    inverted: yes                           # The relay is in active high and needs to be pulled to ground 
+    restore_mode: RESTORE_DEFAULT_OFF
+
+binary_sensor:
+
+#Right Socket
+  - platform: gpio
+    name:                                    # Fill Value
+    id: S1
+    pin:                                     
+      number:                                # Fill Value
+      inverted: True                         
+      mode: 
+        input: True
+        pullup: True
+    filters:
+      - delayed_on: 500ms
+    on_state:
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_on: S1
+            then:
+              - switch.turn_on: R1
+            else:
+              - switch.turn_off: R1

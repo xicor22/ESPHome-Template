@@ -7,6 +7,9 @@ substitutions:
   ota: !secret                              # Fill these fields
   wifipass: "HAHA2205"
 
+preferences:
+  flash_write_interval: 1min
+
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
@@ -18,8 +21,10 @@ esphome:
 
 esp8266:
   board: d1_mini
+  restore_from_flash: True
+  early_pin_init: false                     #Initializes the pins later to prevent relay flicker
 
-# Enable logging
+# Disable logging
 logger:
   baud_rate: 0
 
@@ -50,3 +55,35 @@ dashboard_import:
   import_full_config: true
 
 web_server:
+
+switch:
+  - platform: gpio
+    pin:                                    # Fill Value
+    name:                                   # Fill Value
+    id: R1
+    inverted: yes                           # The relay is in active high and needs to be pulled to ground 
+    restore_mode: RESTORE_DEFAULT_OFF
+
+binary_sensor:
+
+#Right Socket
+  - platform: gpio
+    name:                                    # Fill Value
+    id: S1
+    pin:                                     
+      number:                                # Fill Value
+      inverted: True                         
+      mode: 
+        input: True
+        pullup: True
+    filters:
+      - delayed_on: 500ms
+    on_state:
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_on: S1
+            then:
+              - switch.turn_on: R1
+            else:
+              - switch.turn_off: R1
