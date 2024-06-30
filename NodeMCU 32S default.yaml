@@ -68,7 +68,6 @@ switch:
 
 binary_sensor:
 
-#Right Socket
   - platform: gpio
     name:                                    # Fill Value
     id: S1
